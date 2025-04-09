@@ -85,7 +85,7 @@ const UsersCard = () => {
       <div>
         {users.map((user) => (
           <li key={user._id}>
-            {user.name} - {user.email} -{" "}
+            {user.name} - {user.email} -
             <button onClick={() => handleDeleteUser(user._id)}>X</button>
           </li>
         ))}
