@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "phone_name": "iPhone 13 Pro Max",
+    "image": "https://www.gsmarena.com/apple_iphone_13_pro_max-pictures-11037.jpg",
+    "price": 1099,
+    "creation_year": 2021
+  },
+  {
+    "id": 2,
+    "phone_name": "Samsung Galaxy S21 Ultra",
+    "image": "https://www.gsmarena.com/samsung_galaxy_s21_ultra_5g-pictures-10596.jpg",
+    "price": 1199,
+    "creation_year": 2021
+  },
+  {
+    "id": 3,
+    "phone_name": "Google Pixel 6 Pro",
+    "image": "https://www.gsmarena.com/google_pixel_6_pro-pictures-11085.jpg",
+    "price": 899,
+    "creation_year": 2021
+  },
+  {
+    "id": 4,
+    "phone_name": "OnePlus 9 Pro",
+    "image": "https://www.gsmarena.com/oneplus_9_pro-pictures-10742.jpg",
+    "price": 799,
+    "creation_year": 2021
+  },
+  {
+    "id": 5,
+    "phone_name": "Xiaomi Mi 11 Ultra",
+    "image": "https://www.gsmarena.com/xiaomi_mi_11_ultra-pictures-10804.jpg",
+    "price": 999,
+    "creation_year": 2021
+  },
+  {
+    "id": 6,
+    "phone_name": "Samsung Galaxy Z Fold3",
+    "image": "https://www.gsmarena.com/samsung_galaxy_z_fold3_5g-pictures-10960.jpg",
+    "price": 1799,
+    "creation_year": 2021
+  },
+  {
+    "id": 7,
+    "phone_name": "iPhone 14 Pro",
+    "image": "https://www.gsmarena.com/apple_iphone_14_pro-pictures-11861.jpg",
+    "price": 999,
+    "creation_year": 2022
+  },
+  {
+    "id": 8,
+    "phone_name": "Samsung Galaxy S22 Ultra",
+    "image": "https://www.gsmarena.com/samsung_galaxy_s22_ultra_5g-pictures-11251.jpg",
+    "price": 1199,
+    "creation_year": 2022
+  },
+  {
+    "id": 9,
+    "phone_name": "Google Pixel 7 Pro",
+    "image": "https://www.gsmarena.com/google_pixel_7_pro-pictures-11779.jpg",
+    "price": 899,
+    "creation_year": 2022
+  },
+  {
+    "id": 10,
+    "phone_name": "Xiaomi Redmi Note 11 Pro",
+    "image": "https://www.gsmarena.com/xiaomi_redmi_note_11_pro_5g-pictures-11245.jpg",
+    "price": 279,
+    "creation_year": 2021
+  }
+]
