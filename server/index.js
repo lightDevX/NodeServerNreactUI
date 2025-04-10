@@ -45,7 +45,7 @@ app.get('/users', async (req, res) => {
 app.get('/users/:id', async (req, res) => {
     try {
         const user = await usersCollection.findOne({
-            id: parseInt(req.params.id)
+            _id: new ObjectId(req.params.id)
         });
         user ? res.send(user) : res.status(404).send('User not found');
     } catch (err) {
@@ -60,6 +60,26 @@ app.post('/users', async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         res.status(400).send(err.message);
+    }
+});
+
+app.put('/users/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedUser = req.body;
+
+        const filter = { _id: new ObjectId(id) };
+        const updateDoc = {
+            $set: {
+                name: updatedUser.name,
+                email: updatedUser.email
+            }
+        };
+
+        const result = await usersCollection.updateOne(filter, updateDoc);
+        res.send(result);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
 });
 
