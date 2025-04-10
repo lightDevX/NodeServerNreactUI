@@ -1,4 +1,5 @@
 import { useLoaderData, useRevalidator } from "react-router";
+import Modal from "./Modal";
 
 const UsersCard = () => {
   const users = useLoaderData();
@@ -84,10 +85,26 @@ const UsersCard = () => {
 
       <div>
         {users.map((user) => (
-          <li key={user._id}>
-            {user.name} - {user.email} -
-            <button onClick={() => handleDeleteUser(user._id)}>X</button>
-          </li>
+          <div key={user._id}>
+            <div className="flex items-center gap-5">
+              <div>
+                {user.name} - {user.email}
+              </div>
+              <div className="flex items-center gap-5">
+                <button onClick={() => handleDeleteUser(user._id)}>X</button>
+                {/* Open the modal using document.getElementById('ID').showModal() method */}
+                <button
+                  className="btn"
+                  onClick={() =>
+                    document.getElementById("user_modal").showModal()
+                  }
+                >
+                  Update
+                </button>
+                <Modal user={user}></Modal>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </div>
