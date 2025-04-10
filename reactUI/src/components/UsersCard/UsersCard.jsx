@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { useLoaderData, useRevalidator } from "react-router";
 import Modal from "./Modal";
 
 const UsersCard = () => {
   const users = useLoaderData();
-  console.log(users);
   const revalidator = useRevalidator();
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const handleAddUser = (event) => {
     event.preventDefault();
@@ -12,47 +13,35 @@ const UsersCard = () => {
     const name = form.name.value;
     const email = form.email.value;
 
-    console.log(email, name);
-
     fetch(`http://localhost:3000/users`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email }),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to add user");
-        const data = res.json();
-        return data;
+        return res.json();
       })
-      .then((data) => {
-        console.log(data);
-        revalidator.revalidate(); // Refresh the loader data
-        form.reset(); // Clear form inputs
+      .then(() => {
+        revalidator.revalidate();
+        form.reset();
       })
-      .catch((error) => {
-        console.error("Error adding user:", error);
-      });
+      .catch(console.error);
   };
 
   const handleDeleteUser = (_id) => {
-    console.log("ID", _id);
-    fetch(`http://localhost:3000/users/${_id}`, {
-      method: "DELETE",
-    })
+    fetch(`http://localhost:3000/users/${_id}`, { method: "DELETE" })
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to add user");
-        const data = res.json();
-        return data;
+        if (!res.ok) throw new Error("Failed to delete user");
+        return res.json();
       })
-      .then((data) => {
-        console.log(data);
-        revalidator.revalidate(); // Refresh the loader data
-      })
-      .catch((error) => {
-        console.error("Error adding user:", error);
-      });
+      .then(() => revalidator.revalidate())
+      .catch(console.error);
+  };
+
+  const handleUpdateSuccess = () => {
+    revalidator.revalidate();
+    setSelectedUser(null);
   };
 
   return (
@@ -85,28 +74,27 @@ const UsersCard = () => {
 
       <div>
         {users.map((user) => (
-          <div key={user._id}>
+          <div key={user._id} className="flex items-center gap-5">
+            <div>
+              {user.name} - {user.email}
+            </div>
             <div className="flex items-center gap-5">
-              <div>
-                {user.name} - {user.email}
-              </div>
-              <div className="flex items-center gap-5">
-                <button onClick={() => handleDeleteUser(user._id)}>X</button>
-                {/* Open the modal using document.getElementById('ID').showModal() method */}
-                <button
-                  className="btn"
-                  onClick={() =>
-                    document.getElementById("user_modal").showModal()
-                  }
-                >
-                  Update
-                </button>
-                <Modal user={user}></Modal>
-              </div>
+              <button onClick={() => handleDeleteUser(user._id)}>X</button>
+              <button className="btn" onClick={() => setSelectedUser(user)}>
+                Update
+              </button>
             </div>
           </div>
         ))}
       </div>
+
+      {selectedUser && (
+        <Modal
+          user={selectedUser}
+          onClose={() => setSelectedUser(null)}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
+      )}
     </div>
   );
 };

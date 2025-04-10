@@ -1,33 +1,78 @@
-const Modal = ({ user }) => {
-  console.log(user);
+import { useEffect, useRef } from "react";
+
+const Modal = ({ user, onClose, onUpdateSuccess }) => {
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    user ? modalRef.current?.showModal() : modalRef.current?.close();
+  }, [user]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    try {
+      const response = await fetch(`http://localhost:3000/users/${user._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name.value,
+          email: form.email.value,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.modifiedCount > 0) {
+        onUpdateSuccess(); // Now properly receives the function
+        onClose();
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+    }
+  };
+
   return (
-    <>
-      <dialog id="user_modal" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Hello!</h3>
-          <p className="py-4">Update your information</p>
-          <div className="modal-action items-center justify-center">
-            <form method="dialog w-full ">
-              <fieldset>
-                <label className="fieldset-label my-1.5">Email</label>
-                <input
-                  type="email"
-                  className="input my-1.5"
-                  placeholder="Email"
-                />
-                <label className="fieldset-label my-1.5">Password</label>
-                <input
-                  type="password"
-                  className="input my-1.5"
-                  placeholder="Password"
-                />
-                <button className="btn btn-neutral mt-4">Update</button>
-              </fieldset>
-            </form>
+    <dialog ref={modalRef} className="modal">
+      <div className="modal-box">
+        <h3 className="text-lg font-bold">Update User</h3>
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              defaultValue={user?.name}
+              className="input input-bordered"
+              required
+            />
           </div>
-        </div>
-      </dialog>
-    </>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              defaultValue={user?.email}
+              className="input input-bordered"
+              required
+            />
+          </div>
+
+          <div className="modal-action">
+            <button type="button" onClick={onClose} className="btn btn-ghost">
+              Close
+            </button>
+            <button type="submit" className="btn btn-primary">
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </dialog>
   );
 };
 
